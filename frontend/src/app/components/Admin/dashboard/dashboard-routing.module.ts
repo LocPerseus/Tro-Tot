@@ -5,10 +5,13 @@ import { CategoryComponent } from './Pages/category/category.component';
 import { MemberComponent } from './Pages/member/member.component';
 import { NewsComponent } from './Pages/news/news.component';
 import { HomeDashboardComponent } from './Pages/home-dashboard/home-dashboard.component';
+import { ModalCategoryComponent } from './Pages/modal-category/modal-category.component';
 
 const routes: Routes = [
   { path: 'Dashboard', component: DashboardComponent, children: [
-    {path: 'category', component: CategoryComponent},
+    {path: 'category', component: CategoryComponent, children: [
+      {path: 'create', component: ModalCategoryComponent}
+    ]},
     {path: '', component: HomeDashboardComponent },
     {path: 'member', component: MemberComponent},
     {path: 'news', component: NewsComponent}

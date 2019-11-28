@@ -5,7 +5,8 @@ require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
-var Category = require('../model/Category');
+var Category = require('../models/Category');
+const categoryController = require('../controller/categoryController');
 
 router.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -14,13 +15,15 @@ router.all('*', function(req, res, next) {
     next();
 });
 // GET all
-router.get('/', function(req, res) {
-    Category.find(function(err, categories) {
-        if (err) return next(err);
-        res.json(categories);
-    })
-
-});
+router
+    .route('/')
+    .get(categoryController.getAllCategory)
+    .post(categoryController.postCategory);
+router
+    .route('/:id')
+    .get(categoryController.getCategory)
+    .patch(categoryController.updateCategory)
+    .delete(categoryController.deleteCategory);
 // router.get('/', passport.authenticate('jwt', { session: false }), function(req, res) {
 //     var token = req.headers['authorization'];
 //     if (token) {
@@ -29,7 +32,7 @@ router.get('/', function(req, res) {
 //             res.json(categories);
 //         });
 //     } else {
-//         res.status(403).send({ success: false, msg: 'Unauthorized.' })
+//         res.status(401).send({ success: false, msg: 'Unauthorized.' })
 //     }
 // });
 // GET single
@@ -42,7 +45,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), function(re
         })
 
     } else {
-        res.status(403).send({ success: false, msg: 'Unauthorized.' })
+        res.status(401).send({ success: false, msg: 'Unauthorized.' })
     }
 });
 // POST
@@ -54,7 +57,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), function(req,
             res.json(category);
         });
     } else {
-        return res.status(403).send({ success: false, msg: 'Unauthorized' })
+        return res.status(401).send({ success: false, msg: 'Unauthorized' })
     }
 });
 // Update
@@ -66,7 +69,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), function(re
             res.json(category);
         })
     } else {
-        return res.status(403).send({ success: false, msg: 'Unauthorized' })
+        return res.status(401).send({ success: false, msg: 'Unauthorized' })
     }
 });
 // DELETE
@@ -78,7 +81,7 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), function
             res.json(category);
         })
     } else {
-        res.status(403).send({ success: false, msg: 'Unauthorized' })
+        res.status(401).send({ success: false, msg: 'Unauthorized' })
     }
 });
 module.exports = router;
