@@ -8,12 +8,12 @@ var newsSchema = mongoose.Schema({
     title: {
         type: String,
         trim: true,
-        required: 'Please enter title'
+        required: 'A news must have a title'
     },
-    // description: String,
-    // price: String,
-    // area: Number,
-    // rent_object: String,
+    description: String,
+    price: String,
+    area: Number,
+    rent_object: String,
     image: String,
     creationDate: { type: Date, default: Date.now }
 });

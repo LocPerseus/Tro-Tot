@@ -1,14 +1,13 @@
-var mongoose = require('mongoose');
 var passport = require('passport');
-var config = require('../config/config');
+const config = require('../config/config');
 require('../config/passport')(passport);
-var express = require('express');
-var jwt = require('jsonwebtoken');
-var router = express.Router();
-var News = require('../models/News');
-var Category = require('../models/Category');
-var upload = require('../util/upload');
-var multer = require('multer');
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const router = express.Router();
+const News = require('../models/News');
+const Category = require('../models/Category');
+const upload = require('../util/upload');
+const multer = require('multer');
 router.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');

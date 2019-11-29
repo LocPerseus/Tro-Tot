@@ -1,12 +1,11 @@
-var mongoose = require('mongoose');
-var passport = require('passport');
-var config = require('../config/config');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const config = require('../config/config');
 require('../config/passport')(passport);
-var express = require('express');
-var jwt = require('jsonwebtoken');
-var router = express.Router();
-var Category = require('../models/Category');
-const categoryController = require('../controller/categoryController');
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const router = express.Router();
+const categoryController = require('../controllers/categoryController');
 
 router.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -36,52 +35,52 @@ router
 //     }
 // });
 // GET single
-router.get('/:id', passport.authenticate('jwt', { session: false }), function(req, res, next) {
-    var token = req.headers['authorization'];
-    if (token) {
-        Category.findById(req.params.id, function(err, category) {
-            if (err) return next(err);
-            res.json(category);
-        })
+// router.get('/:id', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+//     var token = req.headers['authorization'];
+//     if (token) {
+//         Category.findById(req.params.id, function(err, category) {
+//             if (err) return next(err);
+//             res.json(category);
+//         })
 
-    } else {
-        res.status(401).send({ success: false, msg: 'Unauthorized.' })
-    }
-});
-// POST
-router.post('/', passport.authenticate('jwt', { session: false }), function(req, res, next) {
-    var token = req.headers['authorization'];
-    if (token) {
-        Category.create(req.body, function(err, category) {
-            if (err) return next(err);
-            res.json(category);
-        });
-    } else {
-        return res.status(401).send({ success: false, msg: 'Unauthorized' })
-    }
-});
-// Update
-router.put('/:id', passport.authenticate('jwt', { session: false }), function(req, res, next) {
-    var token = req.headers['authorization'];
-    if (token) {
-        Category.findByIdAndUpdate(req.params.id, req.body, function(err, category) {
-            if (err) return next(err);
-            res.json(category);
-        })
-    } else {
-        return res.status(401).send({ success: false, msg: 'Unauthorized' })
-    }
-});
-// DELETE
-router.delete('/:id', passport.authenticate('jwt', { session: false }), function(req, res, next) {
-    var token = req.headers['authorization'];
-    if (token) {
-        Category.findByIdAndRemove(req.params.id, req.body, function(err, category) {
-            if (err) return next(err);
-            res.json(category);
-        })
-    } else {
-        res.status(401).send({ success: false, msg: 'Unauthorized' })
-    }
-});
+//     } else {
+//         res.status(401).send({ success: false, msg: 'Unauthorized.' })
+//     }
+// });
+// // POST
+// router.post('/', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+//     var token = req.headers['authorization'];
+//     if (token) {
+//         Category.create(req.body, function(err, category) {
+//             if (err) return next(err);
+//             res.json(category);
+//         });
+//     } else {
+//         return res.status(401).send({ success: false, msg: 'Unauthorized' })
+//     }
+// });
+// // Update
+// router.put('/:id', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+//     var token = req.headers['authorization'];
+//     if (token) {
+//         Category.findByIdAndUpdate(req.params.id, req.body, function(err, category) {
+//             if (err) return next(err);
+//             res.json(category);
+//         })
+//     } else {
+//         return res.status(401).send({ success: false, msg: 'Unauthorized' })
+//     }
+// });
+// // DELETE
+// router.delete('/:id', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+//     var token = req.headers['authorization'];
+//     if (token) {
+//         Category.findByIdAndRemove(req.params.id, req.body, function(err, category) {
+//             if (err) return next(err);
+//             res.json(category);
+//         })
+//     } else {
+//         res.status(401).send({ success: false, msg: 'Unauthorized' })
+//     }
+// });
 module.exports = router;

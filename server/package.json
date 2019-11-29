@@ -9,8 +9,10 @@
     "author": "HoangLoc_PhucChuong",
     "license": "ISC",
     "dependencies": {
+        "accesscontrol": "^2.2.1",
         "acl": "^0.4.11",
         "bcrypt-nodejs": "0.0.3",
+        "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
         "crypto": "^1.0.1",
         "dotenv": "^8.2.0",

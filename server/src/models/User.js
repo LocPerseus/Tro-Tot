@@ -4,13 +4,25 @@ const userSchema = mongoose.Schema({
     username: {
         type: String,
         unique: true,
-        required: true
+        trim: true,
+        required: [true, 'A user must have a username.']
+    },
+    email: {
+        type: String,
+        trim: true,
+        unique: true,
+        required: [true, 'A user must have a email']
     },
     password: {
         type: String,
-        required: true
+        trim: true,
+        required: [true, 'A user must have a password']
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'user'],
+        default: 'user'
     }
-
 });
 
 
@@ -34,13 +46,13 @@ userSchema.pre('save', function(next) {
     }
 });
 
-userSchema.methods.comparePassword = function(passw, cb) {
-    bcrypt.compare(passw, this.password, function(err, isMatch) {
-        if (err) {
-            return cb(err);
-        }
-        cb(null, isMatch);
-    });
-};
+// userSchema.methods.comparePassword = function(passw, cb) {
+//     bcrypt.compare(passw, this.password, function(err, isMatch) {
+//         if (err) {
+//             return cb(err);
+//         }
+//         cb(null, isMatch);
+//     });
+// };
 
 module.exports = mongoose.model('users', userSchema);
